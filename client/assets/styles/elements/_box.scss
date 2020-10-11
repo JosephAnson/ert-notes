@@ -1,0 +1,31 @@
+$box-padding-small: $general-spacing-extra-small !default;
+$box-padding: $general-spacing-small !default;
+$box-padding-medium: $general-spacing !default;
+$box-padding-large: $general-spacing-medium !default;
+
+.box {
+  &.is-small {
+    padding: $box-padding-small;
+  }
+
+  &.is-medium {
+    padding: $box-padding-medium;
+  }
+
+  &.is-large {
+    padding: $box-padding-large;
+  }
+
+  &.is-bordered {
+    background-color: transparent;
+    border: 1px solid $box-background-color;
+  }
+
+  &.is-light {
+    background-color: $grey-darker;
+  }
+
+  &.is-dark {
+    background-color: $grey-darker;
+  }
+}

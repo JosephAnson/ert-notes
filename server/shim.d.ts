@@ -1,0 +1,9 @@
+declare module '@nuxt/builder';
+declare module '@nuxt/webpack';
+declare module '@nuxt/core';
+declare module 'tiptap';
+declare module 'tiptap-extensions';
+declare module 'tiptap-utils';
+declare module 'tiptap-commands';
+declare module 'vuedraggable';
+declare module 'jszip-utils';

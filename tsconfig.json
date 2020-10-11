@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es2018",
+    "sourceMap": true,
+    "outDir": "./dist/",
+    "baseUrl": "./",
+    "incremental": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "paths": {
+      "~~/*": ["./*"],
+      "@@/*": ["./*"],
+      "@/*": ["server/*"],
+      "~/*": ["client/*"]
+    },
+    "types": [
+      "@nuxt/types",
+      "@types/node",
+      "@types/lodash",
+      "@types/jest",
+      "@types/jquery",
+      "cypress"
+    ]
+  },
+  "exclude": ["node_modules", "dist"]
+}
