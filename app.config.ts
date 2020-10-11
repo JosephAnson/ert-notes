@@ -30,7 +30,7 @@ const schema: convict.Schema<any> = {
       env: 'DATABASE_URL'
     },
     url: {
-      default: 'postgres://postgres:admin@localhost:5433/bbb-server',
+      default: 'postgres://postgres:admin@localhost:5433/ert-server',
       env: 'DATABASE_URL'
     },
     synchronize: {
