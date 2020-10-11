@@ -130,9 +130,7 @@ export default class HomePage extends Vue {
     const toolbar = quill.getModule('toolbar');
 
     for (const marker of markers) {
-      toolbar.addHandler(marker, function () {
-        console.log(marker);
-      });
+      toolbar.addHandler(marker, null);
 
       const customButton = document.querySelector('.ql-' + marker);
 
@@ -166,7 +164,6 @@ export default class HomePage extends Vue {
       const contents = editor.editor.getContents().ops;
 
       for (const contentItem of contents) {
-        console.log('content item', contentItem);
         if (contentItem.attributes && 'color' in contentItem.attributes) {
           previewString += `|cff${contentItem.attributes.color.replace(
             '#',
@@ -176,7 +173,7 @@ export default class HomePage extends Vue {
           contentItem.insert &&
           typeof contentItem.insert !== 'string'
         ) {
-          const imageUrlArray = contentItem.insert.image.split('/');
+          const imageUrlArray = (contentItem.insert as any).image.split('/');
           const markerName = imageUrlArray[imageUrlArray.length - 1].replace(
             '.png',
             ''
