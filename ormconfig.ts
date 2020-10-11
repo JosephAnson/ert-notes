@@ -1,8 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const env = require('dotenv');
+// ormconfig.ts
+import { ConnectionOptions } from 'typeorm';
+
+import env from 'dotenv';
+
 env.config();
 
-const ormConfig = {
+const config: ConnectionOptions = {
   // Change the next line to use the Heroku postgres from other environment like localhost, remember that heroku changes this data periodically for security reasons
   url: process.env.DATABASE_URL,
   type: 'postgres',
@@ -23,4 +27,4 @@ const ormConfig = {
       : {}
 };
 
-module.exports = ormConfig;
+module.exports = config;

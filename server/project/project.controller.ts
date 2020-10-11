@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post, Response } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ProjectService } from './project.service';
-import { CreateProjectParams, UpdateProjectParams } from './dto';
+import { CreateProjectParams } from './dto';
 
 @Controller('project')
 export class ProjectController {
@@ -9,22 +9,7 @@ export class ProjectController {
   @Post()
   createProject(@Body() params: CreateProjectParams) {
     return this.projectService.createProject({
-      name: params.name,
-      sassOptions: params.sassOptions
+      name: params.name
     });
-  }
-
-  @Post(':id')
-  updateProject(@Param('id') id: string, @Body() params: UpdateProjectParams) {
-    return this.projectService.updateProject(id, params);
-  }
-
-  @Get(':id/css')
-  projectCss(@Param('id') id: string, @Response() res: any) {
-    const projectCSS = this.projectService.projectCss(id);
-
-    res.type('.css');
-
-    return projectCSS.then((css) => res.send(css));
   }
 }

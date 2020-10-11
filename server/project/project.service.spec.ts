@@ -56,29 +56,5 @@ describe('ProjectService', () => {
 
     const createdProject = await service.createProject(createProjectParams);
     expect(createdProject.name).toEqual(createProjectParams.name);
-    expect(createdProject.css).toBeTruthy();
-  });
-
-  it('should return for create a css file using Sass Options', async () => {
-    const createProjectParams: CreateProjectParams = {
-      name: 'my fancier new project',
-      sassOptions: {
-        text: '#123123',
-        primary: '#bbb',
-        'body-size': '22px'
-      }
-    };
-
-    const createdProject = await service.createProject(createProjectParams);
-    expect(createdProject.name).toEqual(createProjectParams.name);
-    expect(createdProject.css).toBeTruthy();
-
-    // Check text colour
-    expect(createdProject.css).toContain(createProjectParams.sassOptions.text);
-
-    // Check primary colour is used
-    expect(createdProject.css).toContain(
-      createProjectParams.sassOptions.primary
-    );
   });
 });

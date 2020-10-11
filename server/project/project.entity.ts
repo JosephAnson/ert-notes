@@ -7,10 +7,4 @@ export class ProjectEntity extends Base {
     default: 'New Project'
   })
   name!: string;
-
-  @Column()
-  optionsHash!: string;
-
-  @Column()
-  compiledCss!: string;
 }
