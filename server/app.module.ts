@@ -9,7 +9,7 @@ import { ProjectModule } from './project/project.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      ...config.get('typeorm'),
+      ...config.typeorm,
       entities: [ProjectEntity]
     }),
     ProjectModule

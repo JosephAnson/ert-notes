@@ -14,7 +14,7 @@ export interface RootState {
 
 const plugins: any = [];
 
-if (config.get('env') !== 'production') {
+if (!config.production) {
   plugins.push(createLogger({ collapsed: false }));
 }
 

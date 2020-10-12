@@ -16,8 +16,8 @@ declare const module: any;
 
 (async function bootstrap() {
   try {
-    const port = config.get('port');
-    const host = config.get('host');
+    const port = config.port;
+    const host = config.host;
     let nuxt;
 
     if (module.hot && module.hot._main) {
@@ -35,7 +35,7 @@ declare const module: any;
 
     app.useGlobalFilters(await new NuxtFastifyFilter(nuxt));
 
-    if (!config.dev) {
+    if (config.production) {
       app.enableShutdownHooks();
 
       const signals = ['SIGTERM', 'SIGINT'] as const;
