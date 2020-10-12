@@ -1,13 +1,14 @@
-import { ConnectionOptions } from 'typeorm';
-import config from 'app.config';
+const config = require('app.config');
 
-const ormconfig: ConnectionOptions = {
+require('dotenv').config();
+
+const ormconfig = {
   // Change the next line to use the Heroku postgres from other environment like localhost, remember that heroku changes this data periodically for security reasons
   url: config.typeorm.url,
   type: config.typeorm.type,
   migrationsTableName: 'migration_table',
-  migrations: ['dist/migrations/**/*.js'],
-  subscribers: ['dist/subscriber/**/*.js'],
+  migrations: config.typeorm.migrations,
+  subscribers: config.typeorm.subscribers,
   cli: {
     migrationsDir: 'server/migrations',
     subscribersDir: 'server/subscriber'
