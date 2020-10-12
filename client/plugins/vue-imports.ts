@@ -1,34 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-nocheck
 import Vue from 'vue';
-import {
-  Input,
-  Field,
-  Button,
-  Icon,
-  Select,
-  Tag,
-  Tabs,
-  Switch,
-  Radio,
-  Toast,
-  Dropdown,
-  Taginput
-} from 'buefy';
+import Buefy from 'buefy';
 
 // Import Buefy Components
-Vue.use(Dropdown);
-Vue.use(Input);
-Vue.use(Icon);
-Vue.use(Field);
-Vue.use(Select);
-Vue.use(Tag);
-Vue.use(Switch);
-Vue.use(Radio);
-Vue.use(Toast);
-Vue.use(Button);
-Vue.use(Tabs);
-Vue.use(Taginput);
+Vue.use(Buefy);
 
 Vue.filter('pre', (text) => {
   if (!text) return;

@@ -3,7 +3,7 @@
     <section id="ERT-Editor" class="container">
       <div class="box">
         <div class="columns">
-          <div class="column">
+          <div class="column is-6">
             <div class="level">
               <div class="level-left">
                 <h3 class="title is-4">Create</h3>
@@ -78,7 +78,7 @@
               </div>
             </div>
           </div>
-          <div class="column">
+          <div class="column is-6">
             <div class="level">
               <div class="level-left">
                 <h3 class="title is-4">String Preview</h3>

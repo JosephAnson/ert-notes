@@ -2,7 +2,7 @@ export const config = {
   mobileBreakpoint: 1087
 };
 
-interface Marker {
+export interface Marker {
   name: string;
   image: string;
 }
