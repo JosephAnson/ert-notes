@@ -1,6 +1,6 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import env from 'dotenv';
-env.config();
+
+require('dotenv').config();
 
 const isProduction = process.env.NODE_ENV === 'production';
 

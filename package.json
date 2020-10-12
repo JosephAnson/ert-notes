@@ -1,30 +1,16 @@
 {
   "name": "client",
   "version": "0.5.8",
-  "description": "ERT Notes allows you to generate websites using snippets based on the Bulma CSS Frameworks.",
-  "homepage": "https://github.com/BulmaBuildingBlocks/BulmaBuildingBlocks",
-  "bugs": {
-    "url": "https://github.com/BulmaBuildingBlocks/BulmaBuildingBlocks/issues"
-  },
+  "description": "ERT Notes",
   "private": true,
   "snyk": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/BulmaBuildingBlocks/BulmaBuildingBlocks.git"
+    "url": "https://github.com/JosephAnson/ert-notes.git"
   },
   "author": "Joseph Anson <me@josephanson.com>",
   "maintainers": [
-    "Joseph Anson <me@BulmaBuildingBlocks.com>"
-  ],
-  "keywords": [
-    "bulma",
-    "vue",
-    "vuejs",
-    "vue-bulma",
-    "components",
-    "html",
-    "html-snippets",
-    "page-builder"
+    "Joseph Anson <me@josephanson.com>"
   ],
   "scripts": {
     "build": "concurrently \"yarn run server:build:migrate\" \"yarn run client:build\"",
@@ -71,12 +57,6 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "yarn run precommit"
     }
-  },
-  "resolutions": {
-    "prosemirror-model": "1.9.1",
-    "prosemirror-state": "1.3.3",
-    "prosemirror-transform": "1.2.4",
-    "prosemirror-view": "1.14.6"
   },
   "dependencies": {
     "@aceforth/nuxt-optimized-images": "^1.3.0",

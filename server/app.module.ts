@@ -10,6 +10,9 @@ import { ProjectModule } from './project/project.module';
   imports: [
     TypeOrmModule.forRoot({
       ...config.typeorm,
+      url: config.typeorm.url,
+      type: config.typeorm.type,
+      synchronize: config.typeorm.synchronize,
       entities: [ProjectEntity]
     }),
     ProjectModule
