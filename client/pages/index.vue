@@ -38,46 +38,53 @@
                   Add Group
                 </b-button>
               </div>
-              <div
-                v-for="group in groups"
-                :key="group.id"
-                class="groups__items box is-dark"
+              <draggable
+                v-model="groups"
+                group="groups"
+                @start="drag = true"
+                @end="drag = false"
               >
-                <article class="media">
-                  <div class="media-content">
-                    <b-field label="Type" horizontal>
-                      <b-select v-model="group.type">
-                        <option v-for="type in groupType" :key="type">
-                          {{ type }}
-                        </option>
-                      </b-select>
-                    </b-field>
-                    <b-field
-                      v-if="group.type === groupType.PLAYER"
-                      label="Players"
-                      horizontal
-                    >
-                      <b-taginput
-                        v-model="group.players"
-                        :confirm-key-codes="[13, 32, 188]"
-                      ></b-taginput>
-                    </b-field>
-                    <b-field label="Tactic" horizontal>
-                      <ert-editor
-                        :value="group.description"
-                        @change="group.description.value = $event"
-                      ></ert-editor>
-                    </b-field>
-                  </div>
-                  <div class="media-right">
-                    <button class="delete" @click="removeGroup"></button>
-                  </div>
-                </article>
-              </div>
+                <div
+                  v-for="group in groups"
+                  :key="group.id"
+                  class="groups__items box is-dark"
+                >
+                  <article class="media">
+                    <div class="media-content">
+                      <b-field label="Type" horizontal>
+                        <b-select v-model="group.type">
+                          <option v-for="type in groupType" :key="type">
+                            {{ type }}
+                          </option>
+                        </b-select>
+                      </b-field>
+                      <b-field
+                        v-if="group.type === groupType.PLAYER"
+                        label="Players"
+                        horizontal
+                      >
+                        <b-taginput
+                          v-model="group.players"
+                          :confirm-key-codes="[13, 32, 188]"
+                        ></b-taginput>
+                      </b-field>
+                      <b-field label="Tactic" horizontal>
+                        <ert-editor
+                          :value="group.description"
+                          @change="group.description.value = $event"
+                        ></ert-editor>
+                      </b-field>
+                    </div>
+                    <div class="media-right">
+                      <button class="delete" @click="removeGroup"></button>
+                    </div>
+                  </article>
+                </div>
+              </draggable>
             </div>
           </div>
         </div>
-        <div class="column is-6">
+        <div class="column is-6 is-relative">
           <div class="level">
             <div class="level-left">
               <h3 class="title is-4">String Preview</h3>
@@ -88,7 +95,9 @@
               </b-button>
             </div>
           </div>
-          <pre class="box is-white" v-html="ertString"></pre>
+          <div class="preview is-sticky">
+            <pre class="box is-white" v-html="ertString"></pre>
+          </div>
         </div>
       </div>
     </section>
@@ -168,13 +177,13 @@ export default class HomePage extends Vue {
     const ertString = this.createERTString(group.description);
     switch (group.type) {
       case GroupType.HEALER:
-        return `{H}\n${ertString}{/H}`;
+        return `{H}\n${ertString}{/H}\n`;
       case GroupType.DAMAGE:
-        return `{D}\n${ertString}{/D}`;
+        return `{D}\n${ertString}{/D}\n`;
       case GroupType.TANK:
-        return `{T}\n${ertString}{/T}`;
+        return `{T}\n${ertString}{/T}\n`;
       case GroupType.PLAYER:
-        return `{p:${group.players.join(',')}}\n${ertString}{/p}`;
+        return `{p:${group.players.join(',')}}\n${ertString}{/p}\n`;
     }
   }
 
