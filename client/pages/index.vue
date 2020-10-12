@@ -1,96 +1,94 @@
 <template>
   <div class="page-homepage section">
     <section id="ERT-Editor" class="container">
-      <div class="box">
-        <div class="columns">
-          <div class="column is-6">
-            <div class="level">
-              <div class="level-left">
-                <h3 class="title is-4">Create</h3>
-              </div>
-              <div class="level-right">
-                <b-field label="Template" horizontal>
-                  <b-select v-model="templateOption" @input="createSteps">
-                    <option
-                      v-for="(option, key) in templateOptions"
-                      :key="option"
-                      :value="option"
-                    >
-                      {{ key }}
-                    </option>
-                  </b-select>
-                </b-field>
-              </div>
+      <div class="columns">
+        <div class="column is-6">
+          <div class="level">
+            <div class="level-left">
+              <h3 class="title is-4">Create</h3>
             </div>
-            <div class="note__editor box is-light">
-              <b-field label="General Tactic">
-                <ert-editor
-                  class="block"
-                  :value="editor"
-                  @change="editor.value = $event"
-                ></ert-editor>
+            <div class="level-right">
+              <b-field label="Template" horizontal>
+                <b-select v-model="templateOption" @input="createSteps">
+                  <option
+                    v-for="(option, key) in templateOptions"
+                    :key="option"
+                    :value="option"
+                  >
+                    {{ key }}
+                  </option>
+                </b-select>
               </b-field>
-              <div class="box groups">
-                <div class="notification">
-                  Add groups to show messages only to certain players
-                </div>
-                <div class="groups__actions buttons">
-                  <b-button type="is-primary" @click="addGroup">
-                    Add Group
-                  </b-button>
-                </div>
-                <div
-                  v-for="group in groups"
-                  :key="group.id"
-                  class="groups__items box is-dark"
-                >
-                  <article class="media">
-                    <div class="media-content">
-                      <b-field label="Type" horizontal>
-                        <b-select v-model="group.type">
-                          <option v-for="type in groupType" :key="type">
-                            {{ type }}
-                          </option>
-                        </b-select>
-                      </b-field>
-                      <b-field
-                        v-if="group.type === groupType.PLAYER"
-                        label="Players"
-                        horizontal
-                      >
-                        <b-taginput
-                          v-model="group.players"
-                          :confirm-key-codes="[13, 32, 188]"
-                        ></b-taginput>
-                      </b-field>
-                      <b-field label="Tactic" horizontal>
-                        <ert-editor
-                          :value="group.description"
-                          @change="group.description.value = $event"
-                        ></ert-editor>
-                      </b-field>
-                    </div>
-                    <div class="media-right">
-                      <button class="delete" @click="removeGroup"></button>
-                    </div>
-                  </article>
-                </div>
-              </div>
             </div>
           </div>
-          <div class="column is-6">
-            <div class="level">
-              <div class="level-left">
-                <h3 class="title is-4">String Preview</h3>
+          <div class="note__editor box is-light">
+            <b-field label="General Tactic">
+              <ert-editor
+                class="block"
+                :value="editor"
+                @change="editor.value = $event"
+              ></ert-editor>
+            </b-field>
+            <div class="box groups">
+              <div class="notification">
+                Add groups to show messages only to certain players
               </div>
-              <div class="level-right">
-                <b-button type="is-primary" @click="copyErtString">
-                  Copy ERT String
+              <div class="groups__actions buttons">
+                <b-button type="is-primary" @click="addGroup">
+                  Add Group
                 </b-button>
               </div>
+              <div
+                v-for="group in groups"
+                :key="group.id"
+                class="groups__items box is-dark"
+              >
+                <article class="media">
+                  <div class="media-content">
+                    <b-field label="Type" horizontal>
+                      <b-select v-model="group.type">
+                        <option v-for="type in groupType" :key="type">
+                          {{ type }}
+                        </option>
+                      </b-select>
+                    </b-field>
+                    <b-field
+                      v-if="group.type === groupType.PLAYER"
+                      label="Players"
+                      horizontal
+                    >
+                      <b-taginput
+                        v-model="group.players"
+                        :confirm-key-codes="[13, 32, 188]"
+                      ></b-taginput>
+                    </b-field>
+                    <b-field label="Tactic" horizontal>
+                      <ert-editor
+                        :value="group.description"
+                        @change="group.description.value = $event"
+                      ></ert-editor>
+                    </b-field>
+                  </div>
+                  <div class="media-right">
+                    <button class="delete" @click="removeGroup"></button>
+                  </div>
+                </article>
+              </div>
             </div>
-            <pre class="box is-white" v-html="ertString"></pre>
           </div>
+        </div>
+        <div class="column is-6">
+          <div class="level">
+            <div class="level-left">
+              <h3 class="title is-4">String Preview</h3>
+            </div>
+            <div class="level-right">
+              <b-button type="is-primary" @click="copyErtString">
+                Copy ERT String
+              </b-button>
+            </div>
+          </div>
+          <pre class="box is-white" v-html="ertString"></pre>
         </div>
       </div>
     </section>

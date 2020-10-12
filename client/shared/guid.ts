@@ -23,6 +23,17 @@ export class Guid {
     ].join('-');
   }
 
+  public static createWithoutSlash(guid?: string): string {
+    if (guid && this.isGuid(guid)) return guid;
+    return [
+      Guid.gen(2),
+      Guid.gen(1),
+      Guid.gen(1),
+      Guid.gen(1),
+      Guid.gen(3)
+    ].join('');
+  }
+
   private static gen(count: number) {
     let out = '';
     for (let i = 0; i < count; i++) {
