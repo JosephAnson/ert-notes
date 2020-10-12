@@ -30,16 +30,6 @@
                 @ready="editorReady"
               ></quill-editor>
             </div>
-            <div class="content">
-              <ol>
-                <li>Fight summary (amount of phases)</li>
-                <li>All Phases Phase 1-3 Tanks CD</li>
-                <li>
-                  rotation (Possibly only show for tanks and healers) Healer CD
-                </li>
-                <li>Rotation (Possibly only show for tanks and healers)</li>
-              </ol>
-            </div>
           </div>
           <div class="column">
             <div class="level">
