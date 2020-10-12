@@ -21,6 +21,11 @@ $box-padding-large: $general-spacing-medium !default;
     border: 1px solid $box-background-color;
   }
 
+  &.is-white {
+    color: $black;
+    background-color: $white;
+  }
+
   &.is-light {
     background-color: $grey-darker;
   }

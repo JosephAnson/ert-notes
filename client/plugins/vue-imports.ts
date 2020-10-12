@@ -12,7 +12,8 @@ import {
   Switch,
   Radio,
   Toast,
-  Dropdown
+  Dropdown,
+  Taginput
 } from 'buefy';
 
 // Import Buefy Components
@@ -27,6 +28,7 @@ Vue.use(Radio);
 Vue.use(Toast);
 Vue.use(Button);
 Vue.use(Tabs);
+Vue.use(Taginput);
 
 Vue.filter('pre', (text) => {
   if (!text) return;
