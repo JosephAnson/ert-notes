@@ -144,7 +144,7 @@ export default class HomePage extends Vue {
               range.index,
               'image',
               // eslint-disable-next-line @typescript-eslint/no-var-requires
-              require(`~/assets/markers/${marker}.png?url`)
+              require(`~/static/markers/${marker}.png?url`)
             );
           }
         });

@@ -28,7 +28,7 @@ $markers: 'skull', 'cross', 'circle', 'star', 'square', 'triangle', 'diamond',
 @each $marker in $markers {
   .ql-#{$marker} {
     margin-top: -3px;
-    background-image: url('~assets/markers/#{$marker}.png?url') !important;
+    background-image: url('~static/markers/#{$marker}.png?url') !important;
     background-position: center center !important;
     background-size: 16px !important;
     background-repeat: no-repeat !important;
