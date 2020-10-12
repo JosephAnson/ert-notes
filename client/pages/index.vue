@@ -66,15 +66,103 @@ interface Editor {
   editor: Quill | null;
 }
 
-const markers = [
-  'skull',
-  'cross',
-  'circle',
-  'star',
-  'square',
-  'triangle',
-  'diamond',
-  'moon'
+interface Marker {
+  name: string;
+  image: string;
+}
+
+const markers: Marker[] = [
+  { name: 'skull', image: require(`~/static/markers/skull.png?url`) },
+  { name: 'cross', image: require(`~/static/markers/cross.png?url`) },
+  { name: 'circle', image: require(`~/static/markers/circle.png?url`) },
+  { name: 'star', image: require(`~/static/markers/star.png?url`) },
+  { name: 'square', image: require(`~/static/markers/square.png?url`) },
+  { name: 'triangle', image: require(`~/static/markers/triangle.png?url`) },
+  { name: 'diamond', image: require(`~/static/markers/diamond.png?url`) },
+  { name: 'moon', image: require(`~/static/markers/moon.png?url`) }
+];
+
+const textColors = [
+  '#000000',
+  '#434343',
+  '#666666',
+  '#999999',
+  '#b7b7b7',
+  '#cccccc',
+  '#d9d9d9',
+  '#efefef',
+  '#f3f3f3',
+  '#ffffff',
+  '#980000',
+  '#ff0000',
+  '#ff9900',
+  '#ffff00',
+  '#00ff00',
+  '#00ffff',
+  '#4a86e8',
+  '#0000ff',
+  '#9900ff',
+  '#ff00ff',
+  '#e6b8af',
+  '#f4cccc',
+  '#fce5cd',
+  '#fff2cc',
+  '#d9ead3',
+  '#d0e0e3',
+  '#c9daf8',
+  '#cfe2f3',
+  '#d9d2e9',
+  '#ead1dc',
+  '#dd7e6b',
+  '#ea9999',
+  '#f9cb9c',
+  '#ffe599',
+  '#b6d7a8',
+  '#a2c4c9',
+  '#a4c2f4',
+  '#9fc5e8',
+  '#b4a7d6',
+  '#d5a6bd',
+  '#cc4125',
+  '#e06666',
+  '#f6b26b',
+  '#ffd966',
+  '#93c47d',
+  '#76a5af',
+  '#6d9eeb',
+  '#6fa8dc',
+  '#8e7cc3',
+  '#c27ba0',
+  '#a61c00',
+  '#cc0000',
+  '#e69138',
+  '#f1c232',
+  '#6aa84f',
+  '#45818e',
+  '#3c78d8',
+  '#3d85c6',
+  '#674ea7',
+  '#a64d79',
+  '#85200c',
+  '#990000',
+  '#b45f06',
+  '#bf9000',
+  '#38761d',
+  '#134f5c',
+  '#1155cc',
+  '#0b5394',
+  '#351c75',
+  '#741b47',
+  '#5b0f00',
+  '#660000',
+  '#783f04',
+  '#7f6000',
+  '#274e13',
+  '#0c343d',
+  '#1c4587',
+  '#073763',
+  '#20124d',
+  '#4c1130'
 ];
 
 @Component({
@@ -95,91 +183,10 @@ export default class HomePage extends Vue {
       toolbar: [
         [
           {
-            color: [
-              '#000000',
-              '#434343',
-              '#666666',
-              '#999999',
-              '#b7b7b7',
-              '#cccccc',
-              '#d9d9d9',
-              '#efefef',
-              '#f3f3f3',
-              '#ffffff',
-              '#980000',
-              '#ff0000',
-              '#ff9900',
-              '#ffff00',
-              '#00ff00',
-              '#00ffff',
-              '#4a86e8',
-              '#0000ff',
-              '#9900ff',
-              '#ff00ff',
-              '#e6b8af',
-              '#f4cccc',
-              '#fce5cd',
-              '#fff2cc',
-              '#d9ead3',
-              '#d0e0e3',
-              '#c9daf8',
-              '#cfe2f3',
-              '#d9d2e9',
-              '#ead1dc',
-              '#dd7e6b',
-              '#ea9999',
-              '#f9cb9c',
-              '#ffe599',
-              '#b6d7a8',
-              '#a2c4c9',
-              '#a4c2f4',
-              '#9fc5e8',
-              '#b4a7d6',
-              '#d5a6bd',
-              '#cc4125',
-              '#e06666',
-              '#f6b26b',
-              '#ffd966',
-              '#93c47d',
-              '#76a5af',
-              '#6d9eeb',
-              '#6fa8dc',
-              '#8e7cc3',
-              '#c27ba0',
-              '#a61c00',
-              '#cc0000',
-              '#e69138',
-              '#f1c232',
-              '#6aa84f',
-              '#45818e',
-              '#3c78d8',
-              '#3d85c6',
-              '#674ea7',
-              '#a64d79',
-              '#85200c',
-              '#990000',
-              '#b45f06',
-              '#bf9000',
-              '#38761d',
-              '#134f5c',
-              '#1155cc',
-              '#0b5394',
-              '#351c75',
-              '#741b47',
-              '#5b0f00',
-              '#660000',
-              '#783f04',
-              '#7f6000',
-              '#274e13',
-              '#0c343d',
-              '#1c4587',
-              '#073763',
-              '#20124d',
-              '#4c1130'
-            ]
+            color: textColors
           }
         ],
-        markers,
+        markers.map((item) => item.name),
         ['clean']
       ]
     }
@@ -195,20 +202,15 @@ export default class HomePage extends Vue {
     const toolbar = quill.getModule('toolbar');
 
     for (const marker of markers) {
-      toolbar.addHandler(marker, null);
+      toolbar.addHandler(marker.name, null);
 
-      const customButton = document.querySelector('.ql-' + marker);
+      const customButton = document.querySelector('.ql-' + marker.name);
 
       if (customButton) {
         customButton.addEventListener('click', function () {
           const range = quill.getSelection();
           if (range) {
-            quill.insertEmbed(
-              range.index,
-              'image',
-              // eslint-disable-next-line @typescript-eslint/no-var-requires
-              require(`~/static/markers/${marker}.png?url`)
-            );
+            quill.insertEmbed(range.index, 'image', marker.image);
           }
         });
       }
@@ -236,15 +238,14 @@ export default class HomePage extends Vue {
           )}${contentItem.insert}|r`;
         } else if (
           contentItem.insert &&
-          typeof contentItem.insert !== 'string'
+          typeof contentItem.insert !== 'string' &&
+          'image' in contentItem.insert
         ) {
-          const imageUrlArray = (contentItem.insert as any).image.split('/');
-          const markerName = imageUrlArray[imageUrlArray.length - 1].replace(
-            '.png',
-            ''
+          const marker = markers.find(
+            (item) => item.image === (contentItem.insert as any).image
           );
 
-          previewString += `{${markerName}}`;
+          previewString += `{${marker.name}}`;
         } else {
           previewString += contentItem.insert;
         }
