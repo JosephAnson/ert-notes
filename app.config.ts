@@ -6,9 +6,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const typeorm: PostgresConnectionOptions = {
   type: 'postgres',
-  url:
-    process.env.DATABASE_URL ||
-    'postgres://postgres:admin@localhost:5433/ert-server',
+  url: process.env.DATABASE_URL,
   migrations: ['dist/migrations/**/*.js'],
   subscribers: ['dist/subscriber/**/*.js'],
   logging: true,
@@ -24,9 +22,9 @@ const typeorm: PostgresConnectionOptions = {
 
 const config = {
   production: isProduction,
-  env: process.env.NODE_ENV || 'development',
-  port: process.env.PORT || 3000,
-  host: process.env.HOST || 'localhost',
+  env: process.env.NODE_ENV,
+  port: process.env.PORT,
+  host: process.env.HOST,
   typeorm
 };
 
