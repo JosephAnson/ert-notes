@@ -9,15 +9,17 @@
                 <h3 class="title is-4">Create</h3>
               </div>
               <div class="level-right">
-                <b-select v-model="templateOption" @input="createSteps">
-                  <option
-                    v-for="(option, key) in templateOptions"
-                    :key="option"
-                    :value="option"
-                  >
-                    {{ key }}
-                  </option>
-                </b-select>
+                <b-field label="Template" horizontal>
+                  <b-select v-model="templateOption" @input="createSteps">
+                    <option
+                      v-for="(option, key) in templateOptions"
+                      :key="option"
+                      :value="option"
+                    >
+                      {{ key }}
+                    </option>
+                  </b-select>
+                </b-field>
               </div>
             </div>
             <div class="note__editor box is-light">

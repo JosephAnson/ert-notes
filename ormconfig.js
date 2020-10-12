@@ -1,29 +1,30 @@
-const config = require('app.config');
+/***
+ * Don't change this file!
+ */
 
-require('dotenv').config();
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const env = require('dotenv');
+env.config();
 
-console.log("HEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-console.log("HEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-console.log("HEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-console.log("HEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-console.log("HEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-console.log("HEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-console.log("HEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-console.log("HEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-console.log(config.typeorm.url);
-
-const ormconfig = {
+const ormConfig = {
   // Change the next line to use the Heroku postgres from other environment like localhost, remember that heroku changes this data periodically for security reasons
-  url: config.typeorm.url,
-  type: config.typeorm.type,
+  url: process.env.DATABASE_URL,
+  type: 'postgres',
   migrationsTableName: 'migration_table',
-  migrations: config.typeorm.migrations,
-  subscribers: config.typeorm.subscribers,
+  migrations: ['dist/migrations/**/*.js'],
+  subscribers: ['dist/subscriber/**/*.js'],
   cli: {
     migrationsDir: 'server/migrations',
     subscribersDir: 'server/subscriber'
   },
-  extra: config.typeorm.extra
+  extra:
+    process.env.NODE_ENV === 'production'
+      ? {
+          ssl: {
+            rejectUnauthorized: false
+          }
+        }
+      : {}
 };
 
-module.exports = ormconfig;
+module.exports = ormConfig;

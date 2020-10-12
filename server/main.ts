@@ -56,7 +56,7 @@ declare const module: any;
       module.hot.dispose(() => app.close());
     }
 
-    await app.listen(port as number, host, () => {
+    await app.listen(Number(port), host, () => {
       log.log(`Server listening at ${host}:${port}`);
       // log.log(`Server listening at ${config.env.domain}`);
     });
