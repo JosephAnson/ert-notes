@@ -5,6 +5,7 @@ $box-padding-large: $general-spacing-medium !default;
 
 .box {
   box-shadow: none !important;
+  padding: $box-padding;
 
   &.is-small {
     padding: $box-padding-small;

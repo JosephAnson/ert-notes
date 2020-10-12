@@ -35,6 +35,11 @@
   }
 }
 
+.ql-container {
+  font-family: $family-primary;
+  font-size: inherit !important;
+}
+
 .ql-container.ql-snow,
 .ql-toolbar.ql-snow {
   border: 0 !important;
