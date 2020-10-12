@@ -143,7 +143,10 @@ export default class HomePage extends Vue {
 
   async copyErtString() {
     await clipboard(this.ertString);
-    this.$buefy.toast.open('Copied to clipboard!');
+    this.$buefy.toast.open({
+      message: 'Copied to clipboard!',
+      type: 'is-primary'
+    });
   }
 
   addGroup() {
@@ -220,7 +223,7 @@ export default class HomePage extends Vue {
         );
 
         break;
-      case TemplateOption.Custom:
+      case TemplateOption.Empty:
         this.editor.editor.setText('');
         break;
     }

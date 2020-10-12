@@ -3,7 +3,7 @@ import { Guid } from '~/shared/guid';
 
 export enum TemplateOption {
   Default = 'Default',
-  Custom = 'Custom'
+  Empty = 'Empty'
 }
 
 export interface Editor {
