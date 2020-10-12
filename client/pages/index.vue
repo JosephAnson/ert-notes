@@ -38,18 +38,20 @@
                   Add Group
                 </b-button>
               </div>
-              <draggable
-                v-model="groups"
-                group="groups"
-                @start="drag = true"
-                @end="drag = false"
-              >
+              <draggable v-model="groups" group="groups" handle=".handle">
                 <div
                   v-for="group in groups"
                   :key="group.id"
                   class="groups__items box is-dark"
                 >
                   <article class="media">
+                    <div class="media-left">
+                      <b-icon
+                        icon="align-justify"
+                        pack="fas"
+                        class="handle"
+                      ></b-icon>
+                    </div>
                     <div class="media-content">
                       <b-field label="Type" horizontal>
                         <b-select v-model="group.type">

@@ -19,13 +19,13 @@
             v-for="marker in markers"
             :key="marker.name"
             :class="['ql-' + marker.name, 'ql-button']"
-            @click="createMarker(marker)"
+            @click.stop="createMarker(marker)"
           >
           </b-button>
-          <b-button @click="createTimeSnippet">
+          <b-button @click.stop="createTimeSnippet">
             Time Snippet
           </b-button>
-          <b-button @click="createSpellSnippet">
+          <b-button @click.stop="createSpellSnippet">
             Spell Snippet
           </b-button>
         </div>
