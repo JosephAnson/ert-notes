@@ -10,16 +10,6 @@
           ERT Notes
         </nuxt-link>
 
-        <a
-          class="navbar-item"
-          href="https://github.com/BulmaBuildingBlocks/BulmaBuildingBlocks"
-          target="_blank"
-          rel="noopener noreferrer nofollow"
-          title="Github"
-        >
-          <b-icon icon="github-circle" />
-        </a>
-
         <span
           class="navbar-burger burger"
           :class="{ 'is-active': isMenuActive }"
@@ -41,20 +31,11 @@
 
             <div class="navbar-dropdown">
               <strong class="navbar-item is-version">
-                <div class="tags has-addons is-fullwidth">
+                <div class="field has-addons is-fullwidth">
                   <span class="tag">Version</span>
                   <span class="tag is-primary">{{ version }}</span>
                 </div>
               </strong>
-              <hr class="navbar-divider" />
-              <a
-                class="navbar-item"
-                href="https://github.com/BulmaBuildingBlocks/BulmaBuildingBlocks/blob/master/CHANGELOG.md"
-                target="_blank"
-                rel="noopener noreferrer nofollow"
-              >
-                Changelogs
-              </a>
             </div>
           </div>
 

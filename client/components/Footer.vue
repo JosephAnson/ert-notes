@@ -11,28 +11,8 @@
             >Joseph Anson</a
           >
         </p>
-        <p>
-          <small>
-            ERT Notes source code is licensed under
-            <a
-              href="http://opensource.org/licenses/mit-license.php"
-              target="_blank"
-              rel="noopener noreferrer nofollow"
-              >MIT</a
-            >.
-          </small>
-        </p>
 
         <div class="buttons">
-          <a
-            class="button"
-            href="https://github.com/BulmaBuildingBlocks/BulmaBuildingBlocks"
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-          >
-            <b-icon pack="fab" icon="github" />
-            <span>GitHub</span>
-          </a>
           <!--
                 <a class="button is-patreon" href="https://www.patreon.com/" target="_blank">
                   <b-icon icon="patreon" />

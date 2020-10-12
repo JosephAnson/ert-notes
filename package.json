@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "0.5.8",
+  "version": "0.2.0",
   "description": "ERT Notes",
   "private": true,
   "snyk": true,

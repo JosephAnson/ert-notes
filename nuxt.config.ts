@@ -158,7 +158,7 @@ const nuxtConfig: Configuration = {
   robots: {
     UserAgent: '*',
     Allow: '/',
-    Sitemap: 'https://www.bulmabuildingblocks.com/sitemap.xml'
+    Sitemap: 'https://ert-notes.herokuapp.com/sitemap.xml'
   },
 
   sitemap: {
