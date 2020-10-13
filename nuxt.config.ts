@@ -2,7 +2,7 @@ import { Configuration } from '@nuxt/types';
 
 const port = process.env.PORT || '3000';
 const host = process.env.HOST || 'localhost';
-const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+const baseUrl = process.env.BASE_URL || 'http://localhost:3000  ';
 const isDev = process.env.NODE_ENV !== 'production';
 
 const nuxtConfig: Configuration = {
@@ -101,6 +101,7 @@ const nuxtConfig: Configuration = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
+    baseURL: !isDev ? 'https://ert-notes.herokuapp.com/' : baseUrl,
     debug: isDev
   },
 
