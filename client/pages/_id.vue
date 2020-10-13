@@ -129,6 +129,14 @@
           </div>
         </div>
       </div>
+      <div class="columns">
+        <div class="column is-6">
+          <div class="notification is-warning">
+            Save the note and share the url to work on it together, must refresh
+            page to see new changes
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </template>
