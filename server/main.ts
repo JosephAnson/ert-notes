@@ -32,7 +32,7 @@ declare const module: any;
     );
 
     app.setGlobalPrefix('api');
-
+    app.enableCors();
     app.useGlobalFilters(await new NuxtFastifyFilter(nuxt));
 
     if (config.production) {

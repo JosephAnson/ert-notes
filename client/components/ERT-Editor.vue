@@ -50,11 +50,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import Quill from 'quill';
 import { Marker, markers, textColors } from '~/shared/config';
 import { Guid } from '~/shared/guid';
-
-interface Editor {
-  value: string;
-  editor: Quill | null;
-}
+import { Editor } from '~/pages/types';
 
 @Component
 export default class ErtEditor extends Vue {
@@ -62,7 +58,7 @@ export default class ErtEditor extends Vue {
 
   editorID = Guid.createWithoutSlash();
 
-  newValue = this.value.value;
+  newValue = this.value.value || '';
 
   textColors = textColors;
   markers = markers;
@@ -80,7 +76,7 @@ export default class ErtEditor extends Vue {
   $refs!: any;
 
   createMarker(marker: Marker) {
-    const quill = this.value.editor;
+    const quill = this.value.editorRef;
     const range = quill.getSelection();
     if (range) {
       quill.insertEmbed(range.index, 'image', marker.image);
@@ -91,7 +87,7 @@ export default class ErtEditor extends Vue {
   }
 
   createTimeSnippet() {
-    const quill = this.value.editor;
+    const quill = this.value.editorRef;
     const range = quill.getSelection();
 
     if (range) {
@@ -121,7 +117,7 @@ export default class ErtEditor extends Vue {
   }
 
   createSpellSnippet() {
-    const quill = this.value.editor;
+    const quill = this.value.editorRef;
     const range = quill.getSelection();
 
     if (range) {
@@ -149,7 +145,7 @@ export default class ErtEditor extends Vue {
   }
 
   setQuillOnEditor(quill: Quill) {
-    this.value.editor = quill;
+    this.value.editorRef = quill;
   }
 }
 </script>

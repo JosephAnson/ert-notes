@@ -1,16 +1,13 @@
-export class CssOptions {
-  [x: string]: string;
+export class GetProjectParams {
+  id!: string;
 }
 
-export class CreateProjectParams {
-  name?: string;
-}
-
-export class UpdateProjectParams {
-  name?: string;
+export class ProjectParams {
+  id?: string;
+  data!: string;
 }
 
 export class ProjectResponseDTO {
   id!: string;
-  name!: string;
+  data!: string;
 }

@@ -1,15 +1,25 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ProjectService } from './project.service';
-import { CreateProjectParams } from './dto';
+import { ProjectParams, GetProjectParams } from './dto';
 
 @Controller('project')
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
-  @Post()
-  createProject(@Body() params: CreateProjectParams) {
-    return this.projectService.createProject({
-      name: params.name
+  @Post('create')
+  async create(@Body() params: ProjectParams) {
+    return await this.projectService.create(params);
+  }
+
+  @Post('get')
+  async get(@Body() params: GetProjectParams) {
+    return await this.projectService.getById({
+      id: params.id
     });
+  }
+
+  @Post('update')
+  async updateData(@Body() params: ProjectParams) {
+    return await this.projectService.create(params);
   }
 }

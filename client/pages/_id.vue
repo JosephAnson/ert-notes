@@ -1,6 +1,28 @@
 <template>
   <div class="page-homepage section">
     <section id="ERT-Editor" class="container">
+      <div class="level">
+        <div class="level-left">
+          <h3 class="title is-4">Ert Notes</h3>
+        </div>
+        <div class="level-right">
+          <div class="level-item">
+            <b-field class="editor-load-project">
+              <b-input v-model="id"></b-input>
+              <b-button type="is-primary" @click="loadProject">
+                Load Project
+              </b-button>
+            </b-field>
+          </div>
+          <div class="level-item">
+            <div class="buttons">
+              <b-button type="is-primary" @click="saveData">
+                Save
+              </b-button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="columns">
         <div class="column is-6">
           <div class="level">
@@ -72,8 +94,8 @@
                       </b-field>
                       <b-field label="Tactic" horizontal>
                         <ert-editor
-                          :value="group.description"
-                          @change="group.description.value = $event"
+                          :value="group.editor"
+                          @change="group.editor.value = $event"
                         ></ert-editor>
                       </b-field>
                     </div>
@@ -92,9 +114,11 @@
               <h3 class="title is-4">String Preview</h3>
             </div>
             <div class="level-right">
-              <b-button type="is-primary" @click="copyErtString">
-                Copy ERT String
-              </b-button>
+              <div class="buttons">
+                <b-button type="is-primary" @click="copyErtString">
+                  Copy ERT String
+                </b-button>
+              </div>
             </div>
           </div>
           <div class="preview is-sticky">
@@ -112,8 +136,15 @@ import draggable from 'vuedraggable';
 import clipboard from 'copy-to-clipboard';
 import { markers } from '~/shared/config';
 import { Guid } from '~/shared/guid';
-import { Editor, Group, GroupType, TemplateOption } from '~/pages/types';
+import {
+  Editor,
+  Group,
+  GroupType,
+  SaveDataDTO,
+  TemplateOption
+} from '~/pages/types';
 import ErtEditor from '~/components/ERT-Editor.vue';
+import { IsJsonString } from '~/shared/utils';
 
 @Component({
   components: {
@@ -122,10 +153,12 @@ import ErtEditor from '~/components/ERT-Editor.vue';
   }
 })
 export default class HomePage extends Vue {
+  id = null;
+
   defaultTemplateOption = TemplateOption.Default;
   templateOptions = TemplateOption;
   templateOption: TemplateOption = this.defaultTemplateOption;
-  editor: Editor = { value: '', editor: null };
+  editor: Editor = { value: '', editorRef: null };
 
   groupType = GroupType;
   groups: Group[] = [];
@@ -134,7 +167,7 @@ export default class HomePage extends Vue {
     let preview = this.editor.value + '\n';
 
     for (const group of this.groups) {
-      preview += group.description.value;
+      preview += group.editor.value;
     }
 
     return preview;
@@ -163,9 +196,9 @@ export default class HomePage extends Vue {
       id: Guid.create(),
       type: GroupType.PLAYER,
       players: [],
-      description: {
+      editor: {
         value: '',
-        editor: null
+        editorRef: null
       }
     });
   }
@@ -176,7 +209,7 @@ export default class HomePage extends Vue {
   }
 
   createERTGroupString(group: Group) {
-    const ertString = this.createERTString(group.description);
+    const ertString = this.createERTString(group.editor);
     switch (group.type) {
       case GroupType.HEALER:
         return `{H}\n${ertString}{/H}\n`;
@@ -192,8 +225,8 @@ export default class HomePage extends Vue {
   createERTString(editor: Editor) {
     let previewString = '';
 
-    if (editor.editor !== null) {
-      const contents = editor.editor.getContents().ops;
+    if (editor.editorRef) {
+      const contents = editor.editorRef.getContents().ops;
 
       for (const contentItem of contents) {
         if (contentItem.attributes && 'color' in contentItem.attributes) {
@@ -223,7 +256,7 @@ export default class HomePage extends Vue {
   createSteps(type: TemplateOption) {
     switch (type) {
       case TemplateOption.Default:
-        this.editor.editor.setText(
+        this.editor.editorRef.setText(
           'Fight summary\n\n\n' +
             'All Phases\n\n\n' +
             'Phase 1\n\n\n' +
@@ -233,13 +266,79 @@ export default class HomePage extends Vue {
 
         break;
       case TemplateOption.Empty:
-        this.editor.editor.setText('');
+        this.editor.editorRef.setText('');
         break;
     }
   }
 
-  mounted() {
-    this.createSteps(this.defaultTemplateOption);
+  async saveData() {
+    const currentGroups: Group[] = [];
+
+    this.groups.map((item) => {
+      currentGroups.push({
+        id: item.id,
+        players: item.players,
+        type: item.type,
+        editor: {
+          value: item.editor.value,
+          editorRef: null
+        }
+      });
+    });
+
+    const state: SaveDataDTO = {
+      editor: {
+        value: this.editor.value,
+        editorRef: null
+      },
+      groups: currentGroups
+    };
+
+    await this.$axios.post('/project/update', {
+      id: this.id,
+      data: JSON.stringify(state)
+    });
+
+    await this.$buefy.notification.open({
+      message: 'saved',
+      type: 'is-primary'
+    });
+  }
+
+  res = {};
+
+  async asyncData({ $axios, params }) {
+    if (Guid.isGuid(params.id)) {
+      const res = await $axios.$post('/project/get', {
+        id: params.id
+      });
+
+      if (IsJsonString(res.data)) {
+        const data: SaveDataDTO = JSON.parse(res.data) as SaveDataDTO;
+
+        return {
+          editor: data.editor,
+          groups: data.groups,
+          res: data,
+          id: params.id
+        };
+      }
+    }
+
+    return { id: params.id };
+  }
+
+  loadProject() {
+    this.$router.replace('/' + this.id);
+  }
+
+  async mounted() {
+    if (!this.id || !Guid.isGuid(this.id)) {
+      this.id = Guid.create();
+      await this.createSteps(this.defaultTemplateOption);
+      await this.saveData();
+      await this.$router.replace('/' + this.id);
+    }
   }
 }
 </script>

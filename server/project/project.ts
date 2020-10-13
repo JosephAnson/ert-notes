@@ -2,9 +2,9 @@ import { Column, Entity } from 'typeorm';
 import { Base } from '@/common/base.entity';
 
 @Entity('project')
-export class ProjectEntity extends Base {
+export class Project extends Base {
   @Column({
-    default: 'New Project'
+    default: ''
   })
-  name!: string;
+  data!: string;
 }

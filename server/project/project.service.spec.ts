@@ -1,23 +1,22 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProjectController } from '@/project/project.controller';
 import { Repository } from 'typeorm';
-import { ProjectEntity } from '@/project/project.entity';
+import { Project } from '@/project/project';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CreateProjectParams } from '@/project/dto';
 import { ProjectService } from './project.service';
 
 describe('ProjectService', () => {
   let controller: ProjectController;
   let service: ProjectService;
   // declaring the repo variable for easy access later
-  let repo: Repository<ProjectEntity>;
+  let repo: Repository<Project>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         {
           // how you provide the injection token in a test instance
-          provide: getRepositoryToken(ProjectEntity),
+          provide: getRepositoryToken(Project),
           // as a class value, Repository needs no generics
           useClass: Repository
         },
@@ -30,9 +29,7 @@ describe('ProjectService', () => {
 
     service = module.get<ProjectService>(ProjectService);
     // Save the instance of the repository and set the correct generics
-    repo = module.get<Repository<ProjectEntity>>(
-      getRepositoryToken(ProjectEntity)
-    );
+    repo = module.get<Repository<Project>>(getRepositoryToken(Project));
 
     /***
      * Mock Repo calls
@@ -47,14 +44,5 @@ describe('ProjectService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
-  });
-
-  it('should return for create a css file', async () => {
-    const createProjectParams: CreateProjectParams = {
-      name: 'my fancier new project'
-    };
-
-    const createdProject = await service.createProject(createProjectParams);
-    expect(createdProject.name).toEqual(createProjectParams.name);
   });
 });

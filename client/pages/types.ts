@@ -8,7 +8,7 @@ export enum TemplateOption {
 
 export interface Editor {
   value: string;
-  editor: Quill | null;
+  editorRef: Quill | null;
 }
 
 export enum GroupType {
@@ -22,5 +22,10 @@ export interface Group {
   id: Guid;
   type: GroupType;
   players: string[];
-  description: Editor;
+  editor: Editor;
+}
+
+export interface SaveDataDTO {
+  editor: Editor;
+  groups: Group[];
 }
