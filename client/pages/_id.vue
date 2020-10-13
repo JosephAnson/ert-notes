@@ -294,7 +294,7 @@ export default class HomePage extends Vue {
       groups: currentGroups
     };
 
-    await this.$axios.post('/project/update', {
+    await this.$axios.post('/api/project/update', {
       id: this.id,
       data: JSON.stringify(state)
     });
@@ -309,7 +309,7 @@ export default class HomePage extends Vue {
 
   async asyncData({ $axios, params }) {
     if (Guid.isGuid(params.id)) {
-      const res = await $axios.$post('/project/get', {
+      const res = await $axios.$post('/api/project/get', {
         id: params.id
       });
 
