@@ -66,7 +66,6 @@ const nuxtConfig: Configuration = {
    */
   plugins: [
     '~/plugins/vue-imports',
-    '~/plugins/axios',
     { src: '~plugins/nuxt-quill', ssr: false }
   ],
   /*
