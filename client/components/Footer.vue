@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="container">
-      <div class="content">
+      <div class="level">
         <p>
           Authored by
           <a
@@ -12,14 +12,32 @@
           >
         </p>
 
-        <div class="buttons">
-          <!--
-                <a class="button is-patreon" href="https://www.patreon.com/" target="_blank">
-                  <b-icon icon="patreon" />
-                  <span>Patreon</span>
-                </a>-->
+        <div class="level">
+          <p class="guild-text">
+            Visit our guild at:
+          </p>
+          <a
+            href="http://axionguild.com/"
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            class="image guild-logo"
+          >
+            <img src="~/static/axion-white.png" />
+          </a>
         </div>
       </div>
     </div>
   </footer>
 </template>
+
+<style lang="scss">
+.footer {
+  .guild-text {
+    margin-right: 1rem;
+  }
+
+  .guild-logo {
+    width: 8rem;
+  }
+}
+</style>
