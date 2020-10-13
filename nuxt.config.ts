@@ -100,10 +100,14 @@ const nuxtConfig: Configuration = {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {
-    baseURL: !isDev ? 'https://ert-notes.herokuapp.com/' : baseUrl,
-    debug: isDev
-  },
+  axios: isDev
+    ? {
+        debug: isDev
+      }
+    : {
+        baseURL: 'https://ert-notes.herokuapp.com/',
+        debug: isDev
+      },
 
   /*
    ** @aceforth/nuxt-optimized-images module configuration

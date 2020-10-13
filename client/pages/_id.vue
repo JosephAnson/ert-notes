@@ -100,7 +100,10 @@
                       </b-field>
                     </div>
                     <div class="media-right">
-                      <button class="delete" @click="removeGroup"></button>
+                      <button
+                        class="delete"
+                        @click="removeGroup(group)"
+                      ></button>
                     </div>
                   </article>
                 </div>
@@ -205,7 +208,7 @@ export default class HomePage extends Vue {
 
   removeGroup(group: Group) {
     const index = this.groups.indexOf(group);
-    this.groups.slice(index, 1);
+    this.groups.splice(index, 1);
   }
 
   createERTGroupString(group: Group) {
