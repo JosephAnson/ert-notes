@@ -3,7 +3,14 @@
     <section id="ERT-Editor" class="container">
       <div class="level">
         <div class="level-left">
-          <h3 class="title is-4">Ert Notes</h3>
+          <div class="level-item">
+            <h3 class="title is-4">Ert Notes</h3>
+          </div>
+          <div class="level-item">
+            <b-button type="is-primary" @click="newProject">
+              New Project
+            </b-button>
+          </div>
         </div>
         <div class="level-right">
           <div class="level-item">
@@ -337,6 +344,13 @@ export default class HomePage extends Vue {
     }
 
     return { id: params.id };
+  }
+
+  newProject() {
+    const newGuid = Guid.create();
+    this.id = newGuid;
+
+    this.$router.replace('/' + newGuid);
   }
 
   loadProject() {
