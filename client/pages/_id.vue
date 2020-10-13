@@ -303,8 +303,8 @@ export default class HomePage extends Vue {
     });
 
     await this.$buefy.notification.open({
-      message: 'saved',
-      type: 'is-primary'
+      message: 'Saved',
+      type: 'is-success'
     });
   }
 
