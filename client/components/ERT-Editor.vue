@@ -83,7 +83,7 @@ import { Editor, Player } from '~/pages/types';
 @Component
 export default class ErtEditor extends Vue {
   @Prop(Object) value!: Editor;
-  @Prop(Array) players!: Player[];
+  @Prop({ type: Array, default: [] }) players!: Player[];
 
   editorID = Guid.createWithoutSlash();
 
@@ -93,7 +93,7 @@ export default class ErtEditor extends Vue {
   markers = markers;
 
   selectedName = '';
-  selectedPlayer: Player | null = '';
+  selectedPlayer: Player | null = null;
 
   editorOption = {
     // Some Quill options...

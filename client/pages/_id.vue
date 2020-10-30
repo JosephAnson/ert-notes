@@ -430,7 +430,7 @@ export default class HomePage extends Vue {
         editorRef: null
       },
       groups: currentGroups,
-      players: this.players
+      players: this.players || []
     };
 
     await this.$axios.post('/api/project/update', {
@@ -458,7 +458,7 @@ export default class HomePage extends Vue {
         return {
           editor: data.editor,
           groups: data.groups,
-          players: data.players,
+          players: data.players || [],
           res: data,
           id: params.id
         };
