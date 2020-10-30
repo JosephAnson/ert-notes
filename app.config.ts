@@ -25,6 +25,8 @@ const config = {
   env: process.env.NODE_ENV,
   port: process.env.PORT,
   host: process.env.HOST,
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
   typeorm
 };
 

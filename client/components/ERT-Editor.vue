@@ -1,41 +1,67 @@
 <template>
   <div>
-    <div
-      ref="toolbar"
-      :class="['toolbar' + editorID]"
-      class="toolbar ql-snow ql-toolbar"
-    >
-      <div class="columns">
-        <div class="column">
-          <select class="ql-color ql-picker ql-color-picker">
-            <option
-              v-for="color in textColors"
-              :key="color"
-              :value="color"
-              :style="{ background: color }"
-            ></option>
-          </select>
-          <b-button
-            v-for="marker in markers"
-            :key="marker.name"
-            :class="['ql-' + marker.name, 'ql-button']"
-            @click.stop="createMarker(marker)"
-          >
-          </b-button>
-          <b-button @click.stop="createTimeSnippet">
-            Time Snippet
-          </b-button>
-          <b-button @click.stop="createSpellSnippet">
-            Spell Snippet
-          </b-button>
+    <div class="editor-toolbar box is-light is-bordered is-marginless is-small">
+      <div
+        ref="toolbar"
+        :class="['toolbar' + editorID]"
+        class="toolbar ql-snow ql-toolbar"
+      >
+        <div class="columns">
+          <div class="column">
+            <select class="ql-color ql-picker ql-color-picker">
+              <option
+                v-for="color in textColors"
+                :key="color"
+                :value="color"
+                :style="{ background: color }"
+              ></option>
+            </select>
+            <b-button
+              v-for="marker in markers"
+              :key="marker.name"
+              :class="['ql-' + marker.name, 'ql-button']"
+              @click.stop="createMarker(marker)"
+            >
+            </b-button>
+            <b-button @click.stop="createTimeSnippet">
+              Time Snippet
+            </b-button>
+            <b-button @click.stop="createSpellSnippet">
+              Spell Snippet
+            </b-button>
+          </div>
+          <div class="column is-narrow">
+            <b-button class="ql-clean"> Clear </b-button>
+          </div>
         </div>
-        <div class="column is-narrow">
-          <b-button class="ql-clean"> Clear </b-button>
-        </div>
+      </div>
+
+      <div class="block is-small">
+        <b-field label="Players" v-if="players.length" horizontal>
+          <b-field>
+            <b-select v-model="selectedPlayer" size="is-small">
+              <option
+                v-for="player in players"
+                :key="player.id"
+                :value="player"
+              >
+                {{ player.name }}
+              </option>
+            </b-select>
+            <b-button
+              type="is-primary"
+              size="is-small"
+              @click="createPlayerSnippet"
+            >
+              Add
+            </b-button>
+          </b-field>
+        </b-field>
       </div>
     </div>
 
     <quill-editor
+      class="editor-editor"
       ref="editor"
       v-model="newValue"
       type="textarea"
@@ -48,13 +74,14 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import Quill from 'quill';
-import { Marker, markers, textColors } from '~/shared/config';
+import { Marker, markers, textColors, wowColors } from '~/shared/config';
 import { Guid } from '~/shared/guid';
-import { Editor } from '~/pages/types';
+import { Editor, Player } from '~/pages/types';
 
 @Component
 export default class ErtEditor extends Vue {
   @Prop(Object) value!: Editor;
+  @Prop(Array) players!: Player[];
 
   editorID = Guid.createWithoutSlash();
 
@@ -62,6 +89,8 @@ export default class ErtEditor extends Vue {
 
   textColors = textColors;
   markers = markers;
+
+  selectedPlayer: Player | null = null;
 
   editorOption = {
     // Some Quill options...
@@ -129,11 +158,28 @@ export default class ErtEditor extends Vue {
         trapFocus: true,
         onConfirm: (value) => {
           this.$buefy.toast.open(`Spell entered is: ${value}`);
+          const insertString = '{spell:' + value + '}';
 
-          quill.insertText(range.index, '{spell:' + value + '}');
-          quill.setSelection(range.index + value.length + 8, 0);
+          quill.insertText(range.index, insertString);
+          quill.setSelection(range.index + insertString.length, 0);
         }
       });
+    } else {
+      this.showSelectEditorToast();
+    }
+  }
+
+  createPlayerSnippet() {
+    const quill = this.value.editorRef;
+    const range = quill.getSelection();
+
+    if (range) {
+      const insertString = this.selectedPlayer.name;
+
+      quill.insertText(range.index, insertString, {
+        color: wowColors[this.selectedPlayer.class]
+      });
+      quill.setSelection(range.index + insertString.length, 0);
     } else {
       this.showSelectEditorToast();
     }

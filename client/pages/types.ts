@@ -8,6 +8,7 @@ export enum TemplateOption {
 
 export interface Editor {
   value: string;
+  players?: Player[];
   editorRef: Quill | null;
 }
 
@@ -16,6 +17,26 @@ export enum GroupType {
   DAMAGE = 'Damage Dealers',
   TANK = 'Tanks',
   PLAYER = 'Players'
+}
+
+export enum WowClasses {
+  deathknight = 'Death Knight',
+  druid = 'Druid',
+  hunter = 'Hunter',
+  mage = 'Mage',
+  monk = 'Monk',
+  paladin = 'Paladin',
+  priest = 'Priest',
+  rogue = 'Rogue',
+  shaman = 'Shaman',
+  warlock = 'Warlock',
+  demonhunter = 'Demon Hunter'
+}
+
+export interface Player {
+  id: Guid;
+  name: string;
+  class: WowClasses;
 }
 
 export interface Group {
@@ -28,4 +49,5 @@ export interface Group {
 export interface SaveDataDTO {
   editor: Editor;
   groups: Group[];
+  players: Player[];
 }

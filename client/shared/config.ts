@@ -18,7 +18,41 @@ export const markers: Marker[] = [
   { name: 'moon', image: require(`~/static/markers/moon.png?url`) }
 ];
 
+export const wowColors = {
+  'Death Knight': '#C41F3B',
+  Druid: '#FF7D0A',
+  Hunter: '#ABD473',
+  Mage: '#69CCF0',
+  Monk: '#00FF96',
+  Paladin: '#F58CBA',
+  Priest: '#FFFFFF',
+  Rogue: '#FFF569',
+  Shaman: '#0070DE',
+  Warlock: '#9482C9',
+  'Demon Hunter': '#a330c9'
+};
+
 export const textColors: string[] = [
+  '#C41F3B',
+  '#FF7D0A',
+  '#ABD473',
+  '#69CCF0',
+  '#00FF96',
+  '#F58CBA',
+  '#FFFFFF',
+  '#FFF569',
+  '#0070DE',
+  '#9482C9',
+  '#a330c9',
+  '#C79C6E',
+  '#ffffff',
+  '#ffffff',
+  '#ffffff',
+  '#ffffff',
+  '#ffffff',
+  '#ffffff',
+  '#ffffff',
+  '#ffffff',
   '#000000',
   '#434343',
   '#666666',
