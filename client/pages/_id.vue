@@ -167,7 +167,7 @@
                 <div
                   v-for="player in players"
                   :key="player.id"
-                  class="player__items box is-dark"
+                  class="player__items block is-small"
                 >
                   <article class="media">
                     <div class="media-left">
