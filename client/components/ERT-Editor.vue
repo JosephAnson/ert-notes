@@ -37,17 +37,19 @@
       </div>
 
       <div class="block is-small">
-        <b-field label="Players" v-if="players.length" horizontal>
+        <b-field v-if="players.length">
           <b-field>
-            <b-select v-model="selectedPlayer" size="is-small">
-              <option
-                v-for="player in players"
-                :key="player.id"
-                :value="player"
-              >
-                {{ player.name }}
-              </option>
-            </b-select>
+            <b-autocomplete
+              v-model="selectedName"
+              size="is-small"
+              placeholder="e.g. Player Name"
+              keep-first
+              open-on-focus
+              :data="filteredPlayers(selectedName)"
+              field="name"
+              @select="(option) => (selectedPlayer = option)"
+            >
+            </b-autocomplete>
             <b-button
               type="is-primary"
               size="is-small"
@@ -61,9 +63,9 @@
     </div>
 
     <quill-editor
-      class="editor-editor"
       ref="editor"
       v-model="newValue"
+      class="editor-editor"
       type="textarea"
       :options="editorOption"
       @ready="setQuillOnEditor"
@@ -90,7 +92,8 @@ export default class ErtEditor extends Vue {
   textColors = textColors;
   markers = markers;
 
-  selectedPlayer: Player | null = null;
+  selectedName = '';
+  selectedPlayer: Player | null = '';
 
   editorOption = {
     // Some Quill options...
@@ -103,6 +106,12 @@ export default class ErtEditor extends Vue {
   };
 
   $refs!: any;
+
+  filteredPlayers(text) {
+    return this.players.filter((player) => {
+      return player.name.toString().toLowerCase().includes(text.toLowerCase());
+    });
+  }
 
   createMarker(marker: Marker) {
     const quill = this.value.editorRef;
