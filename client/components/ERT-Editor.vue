@@ -29,6 +29,9 @@
             <b-button @click.stop="createSpellSnippet">
               Spell Snippet
             </b-button>
+            <b-button @click="openSpellOccurenceDialog">
+              Spell Occurrence
+            </b-button>
           </div>
           <div class="column is-narrow">
             <b-button class="ql-clean"> Clear </b-button>
@@ -62,6 +65,54 @@
       </div>
     </div>
 
+    <b-modal
+      :active.sync="isComponentModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <template>
+        <div class="modal-card animation-content">
+          <section class="modal-card-body is-titleless">
+            <div class="media">
+              <div class="media-content">
+                <b-field label="Enter the Time after spell cast? {00:10}">
+                  <b-input
+                    v-model="spellOccurrence.timeAfterSpellStarted"
+                  ></b-input>
+                </b-field>
+                <b-field label="Enter the spell id?">
+                  <b-numberinput
+                    icon-pack="fa"
+                    v-model="spellOccurrence.spellId"
+                  ></b-numberinput>
+                </b-field>
+                <b-field label="Enter the cast number?">
+                  <b-numberinput
+                    icon-pack="fa"
+                    v-model="spellOccurrence.occurrence"
+                  ></b-numberinput>
+                </b-field>
+              </div>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button" @click="isComponentModalActive = false">
+              Cancel
+            </button>
+            <button
+              class="button is-primary"
+              @click="createSpellOccurenceSnippet"
+            >
+              Done
+            </button>
+          </footer>
+        </div>
+      </template>
+    </b-modal>
+
     <quill-editor
       ref="editor"
       v-model="newValue"
@@ -94,6 +145,15 @@ export default class ErtEditor extends Vue {
 
   selectedName = '';
   selectedPlayer: Player | null = null;
+  isComponentModalActive = false;
+
+  currentRange = null;
+
+  spellOccurrence = {
+    timeAfterSpellStarted: '00:10',
+    occurrence: 1,
+    spellId: 306111
+  };
 
   editorOption = {
     // Some Quill options...
@@ -173,6 +233,37 @@ export default class ErtEditor extends Vue {
           quill.setSelection(range.index + insertString.length, 0);
         }
       });
+    } else {
+      this.showSelectEditorToast();
+    }
+  }
+
+  openSpellOccurenceDialog() {
+    const quill = this.value.editorRef;
+    this.currentRange = quill.getSelection();
+
+    this.isComponentModalActive = true;
+  }
+
+  createSpellOccurenceSnippet() {
+    const quill = this.value.editorRef;
+
+    if (this.currentRange) {
+      quill.setSelection(this.currentRange);
+    }
+
+    const range = quill.getSelection();
+
+    if (range) {
+      this.$buefy.toast.open(
+        `Snippet entered is: {time:0:30,SCS:${this.spellOccurrence.spellId}:${this.spellOccurrence.occurrence}}`
+      );
+      const insertString = `{time:${this.spellOccurrence.timeAfterSpellStarted},SCS:${this.spellOccurrence.spellId}:${this.spellOccurrence.occurrence}}`;
+
+      quill.insertText(range.index, insertString);
+      quill.setSelection(range.index + insertString.length, 0);
+
+      this.isComponentModalActive = false;
     } else {
       this.showSelectEditorToast();
     }

@@ -7,6 +7,8 @@ html {
   @include mobile {
     font-size: 13px;
   }
+
+  font-size: 14px;
 }
 
 html.is-clipped-touch {
