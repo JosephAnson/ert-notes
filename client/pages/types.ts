@@ -30,6 +30,7 @@ export enum WowClasses {
   rogue = 'Rogue',
   shaman = 'Shaman',
   warlock = 'Warlock',
+  warrior = 'Warrior',
   demonhunter = 'Demon Hunter'
 }
 

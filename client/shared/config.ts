@@ -29,6 +29,7 @@ export const wowColors = {
   Rogue: '#FFF569',
   Shaman: '#0070DE',
   Warlock: '#9482C9',
+  Warrior: '#C79C6E',
   'Demon Hunter': '#a330c9'
 };
 
