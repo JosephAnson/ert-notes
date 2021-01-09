@@ -148,7 +148,6 @@ export default class ErtEditor extends Vue {
   editorOption = {
     // Some Quill options...
     theme: 'snow',
-    formats: ['color'],
     modules: {
       toolbar: {
         container: '.toolbar' + this.editorID
