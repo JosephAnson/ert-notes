@@ -269,8 +269,6 @@ export default class ErtEditor extends Vue {
 
     if (range) {
       const insertString = player.name;
-      // eslint-disable-next-line no-console
-      console.log(range);
 
       await quill.insertText(range.index, insertString, {
         color: wowColors[player.class]
@@ -310,8 +308,6 @@ export default class ErtEditor extends Vue {
 
           for (const string of splitText) {
             const color = string.substring(0, 6);
-            // eslint-disable-next-line no-console
-            console.log('op', op);
             if (this.isHexColor(color)) {
               ops.push({
                 insert: string.substring(6), // Add text after color
