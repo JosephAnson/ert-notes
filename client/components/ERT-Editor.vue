@@ -148,6 +148,7 @@ export default class ErtEditor extends Vue {
   editorOption = {
     // Some Quill options...
     theme: 'snow',
+    format: ['image', 'color'],
     modules: {
       toolbar: {
         container: '.toolbar' + this.editorID
@@ -305,19 +306,25 @@ export default class ErtEditor extends Vue {
         if (op.insert && typeof op.insert === 'string') {
           const splitText = op.insert.split(/\|cff([\S\w\s\d]+?)\|r/gim);
 
-          for (const string of splitText) {
-            const color = string.substring(0, 6);
-            if (this.isHexColor(color)) {
-              ops.push({
-                insert: string.substring(6), // Add text after color
-                attributes: { color: '#' + color }
-              });
-            } else {
-              ops.push({
-                insert: string
-              });
+          if (splitText.length > 1) {
+            for (const string of splitText) {
+              const color = string.substring(0, 6);
+              if (this.isHexColor(color)) {
+                ops.push({
+                  insert: string.substring(6), // Add text after color
+                  attributes: { color: '#' + color }
+                });
+              } else {
+                // eslint-disable-next-line no-console
+                console.log('OP', op);
+                ops.push({ insert: string });
+              }
             }
+          } else {
+            ops.push(op);
           }
+        } else {
+          ops.push(op);
         }
       });
       delta.ops = ops;

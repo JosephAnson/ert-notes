@@ -365,23 +365,31 @@ export default class HomePage extends Vue {
       const contents = editor.editorRef.getContents().ops;
 
       for (const contentItem of contents) {
-        if (contentItem.attributes && 'color' in contentItem.attributes) {
-          previewString += `|cff${contentItem.attributes.color.replace(
-            '#',
-            ''
-          )}${contentItem.insert}|r`;
-        } else if (
+        console.log('contentItem', contentItem);
+        if (
           contentItem.insert &&
           typeof contentItem.insert !== 'string' &&
           'image' in contentItem.insert
         ) {
+          console.log('markers', markers);
+          console.log('marker', contentItem.insert);
+
           const marker = markers.find(
             (item) => item.image === (contentItem.insert as any).image
           );
+          console.log('marker', marker);
 
           if (marker && 'name' in marker) {
             previewString += `{${marker.name}}`;
           }
+        } else if (
+          contentItem.attributes &&
+          'color' in contentItem.attributes
+        ) {
+          previewString += `|cff${contentItem.attributes.color.replace(
+            '#',
+            ''
+          )}${contentItem.insert}|r`;
         } else {
           previewString += contentItem.insert;
         }
