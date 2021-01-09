@@ -257,7 +257,7 @@ export default class ErtEditor extends Vue {
     }
   }
 
-  createPlayerSnippet(player: Player) {
+  async createPlayerSnippet(player: Player) {
     const quill = this.value.editorRef;
 
     if (this.currentRange) {
@@ -268,10 +268,17 @@ export default class ErtEditor extends Vue {
 
     if (range) {
       const insertString = player.name;
+      // eslint-disable-next-line no-console
+      console.log(range);
 
-      quill.insertText(range.index, ' ' + insertString, {
+      await quill.insertText(range.index, insertString, {
         color: wowColors[player.class]
       });
+      await quill.insertText(range.index + insertString.length, ' ');
+      quill.removeFormat(
+        range.index + insertString.length,
+        range.index + insertString.length + 1
+      );
       quill.setSelection(range.index + insertString.length + 1, 0);
     } else {
       this.showSelectEditorToast();
@@ -301,20 +308,18 @@ export default class ErtEditor extends Vue {
           const splitText = op.insert.split(/\|cff([\S\w\s\d]+?)\|r/gim);
 
           for (const string of splitText) {
-            // eslint-disable-next-line no-console
-            console.log('string', string);
             const color = string.substring(0, 6);
             // eslint-disable-next-line no-console
-            console.log('color', color);
+            console.log('op', op);
             if (this.isHexColor(color)) {
               ops.push({
                 insert: string.substring(6), // Add text after color
                 attributes: { color: '#' + color }
               });
             } else {
-              ops.push({
-                insert: string
-              });
+              // delete op.attributes.background;
+
+              ops.push(op);
             }
           }
         }
