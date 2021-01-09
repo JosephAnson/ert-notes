@@ -283,6 +283,10 @@ export default class ErtEditor extends Vue {
     this.$emit('change', this.newValue);
   }
 
+  isHexColor(color: string) {
+    return /^#[0-9A-F]{6}$/i.test('#' + color);
+  }
+
   setQuillOnEditor(quill: Quill) {
     this.value.editorRef = quill;
 
@@ -294,9 +298,25 @@ export default class ErtEditor extends Vue {
       const ops = [];
       delta.ops.forEach((op) => {
         if (op.insert && typeof op.insert === 'string') {
-          ops.push({
-            insert: op.insert
-          });
+          const splitText = op.insert.split(/\|cff([\S\w\s\d]+?)\|r/gim);
+
+          for (const string of splitText) {
+            // eslint-disable-next-line no-console
+            console.log('string', string);
+            const color = string.substring(0, 6);
+            // eslint-disable-next-line no-console
+            console.log('color', color);
+            if (this.isHexColor(color)) {
+              ops.push({
+                insert: string.substring(6), // Add text after color
+                attributes: { color: '#' + color }
+              });
+            } else {
+              ops.push({
+                insert: string
+              });
+            }
+          }
         }
       });
       delta.ops = ops;
