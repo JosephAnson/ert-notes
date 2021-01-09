@@ -8,6 +8,7 @@ $box-padding-large: $general-spacing-medium !default;
   padding: $box-padding;
 
   &.is-small {
+    font-size: 1rem;
     padding: $box-padding-small;
   }
 
@@ -35,5 +36,9 @@ $box-padding-large: $general-spacing-medium !default;
 
   &.is-dark {
     background-color: $grey-darker;
+  }
+
+  &.is-darker {
+    background-color: $background;
   }
 }

@@ -41,26 +41,18 @@
 
       <div class="block is-small">
         <b-field v-if="players.length">
-          <b-field>
-            <b-autocomplete
-              v-model="selectedName"
-              size="is-small"
-              placeholder="e.g. Player Name"
-              keep-first
-              open-on-focus
-              :data="filteredPlayers(selectedName)"
-              field="name"
-              @select="(option) => (selectedPlayer = option)"
+          <div class="control box is-black is-small content">
+            <a
+              v-for="player in players"
+              :key="player.id"
+              :class="
+                'has-wow-text-' + player.class.replace(' ', '-').toLowerCase()
+              "
+              @click.prevent="createPlayerSnippet(player)"
             >
-            </b-autocomplete>
-            <b-button
-              type="is-primary"
-              size="is-small"
-              @click="createPlayerSnippet"
-            >
-              Add
-            </b-button>
-          </b-field>
+              {{ player.name }}
+            </a>
+          </div>
         </b-field>
       </div>
     </div>
@@ -85,14 +77,14 @@
                 </b-field>
                 <b-field label="Enter the spell id?">
                   <b-numberinput
-                    icon-pack="fa"
                     v-model="spellOccurrence.spellId"
+                    icon-pack="fa"
                   ></b-numberinput>
                 </b-field>
                 <b-field label="Enter the cast number?">
                   <b-numberinput
-                    icon-pack="fa"
                     v-model="spellOccurrence.occurrence"
+                    icon-pack="fa"
                   ></b-numberinput>
                 </b-field>
               </div>
@@ -143,8 +135,6 @@ export default class ErtEditor extends Vue {
   textColors = textColors;
   markers = markers;
 
-  selectedName = '';
-  selectedPlayer: Player | null = null;
   isComponentModalActive = false;
 
   currentRange = null;
@@ -166,12 +156,6 @@ export default class ErtEditor extends Vue {
   };
 
   $refs!: any;
-
-  filteredPlayers(text) {
-    return this.players.filter((player) => {
-      return player.name.toString().toLowerCase().includes(text.toLowerCase());
-    });
-  }
 
   createMarker(marker: Marker) {
     const quill = this.value.editorRef;
@@ -238,6 +222,10 @@ export default class ErtEditor extends Vue {
     }
   }
 
+  setCurrentPosition() {
+    this.currentRange = this.value.editorRef.getSelection();
+  }
+
   openSpellOccurenceDialog() {
     const quill = this.value.editorRef;
     this.currentRange = quill.getSelection();
@@ -269,17 +257,22 @@ export default class ErtEditor extends Vue {
     }
   }
 
-  createPlayerSnippet() {
+  createPlayerSnippet(player: Player) {
     const quill = this.value.editorRef;
+
+    if (this.currentRange) {
+      quill.setSelection(this.currentRange);
+    }
+
     const range = quill.getSelection();
 
     if (range) {
-      const insertString = this.selectedPlayer.name;
+      const insertString = player.name;
 
-      quill.insertText(range.index, insertString, {
-        color: wowColors[this.selectedPlayer.class]
+      quill.insertText(range.index, ' ' + insertString, {
+        color: wowColors[player.class]
       });
-      quill.setSelection(range.index + insertString.length, 0);
+      quill.setSelection(range.index + insertString.length + 1, 0);
     } else {
       this.showSelectEditorToast();
     }
@@ -292,6 +285,23 @@ export default class ErtEditor extends Vue {
 
   setQuillOnEditor(quill: Quill) {
     this.value.editorRef = quill;
+
+    quill.root.addEventListener('blur', () => {
+      this.setCurrentPosition();
+    });
+
+    quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
+      const ops = [];
+      delta.ops.forEach((op) => {
+        if (op.insert && typeof op.insert === 'string') {
+          ops.push({
+            insert: op.insert
+          });
+        }
+      });
+      delta.ops = ops;
+      return delta;
+    });
   }
 }
 </script>

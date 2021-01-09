@@ -2,3 +2,37 @@
   height: 100% !important;
   max-height: none !important;
 }
+
+$wow-colors: (
+  'death-knight': #C41F3B,
+  'druid': #FF7D0A,
+  'hunter': #ABD473,
+  'mage': #69CCF0,
+  'monk': #00FF96,
+  'paladin': #F58CBA,
+  'priest': #FFFFFF,
+  'rogue': #FFF569,
+  'shaman': #0070DE,
+  'warlock': #9482C9,
+  'warrior': #C79C6E,
+  'demon-hunter': #a330c9
+);
+
+@each $name, $pair in $wow-colors {
+  $color: nth($pair, 1);
+
+  .has-wow-text-#{$name} {
+    color: $color !important;
+  }
+
+  a.has-wow-text-#{$name} {
+    &:hover,
+    &:focus {
+      color: bulmaDarken($color, 10%) !important;
+    }
+  }
+
+  .has-wow-background-#{$name} {
+    background-color: $color !important;
+  }
+}
