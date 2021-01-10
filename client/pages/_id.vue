@@ -365,19 +365,16 @@ export default class HomePage extends Vue {
       const contents = editor.editorRef.getContents().ops;
 
       for (const contentItem of contents) {
-        console.log('contentItem', contentItem);
         if (
           contentItem.insert &&
           typeof contentItem.insert !== 'string' &&
           'image' in contentItem.insert
         ) {
-          console.log('markers', markers);
-          console.log('marker', contentItem.insert);
+          const imgURL = (contentItem.insert as any).image
+            .replace('http://localhost:3000', '')
+            .replace('https://ert-notes.herokuapp.com', '');
 
-          const marker = markers.find(
-            (item) => item.image === (contentItem.insert as any).image
-          );
-          console.log('marker', marker);
+          const marker = markers.find((item) => item.image === imgURL);
 
           if (marker && 'name' in marker) {
             previewString += `{${marker.name}}`;
