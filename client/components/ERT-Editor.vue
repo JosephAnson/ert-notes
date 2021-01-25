@@ -274,10 +274,7 @@ export default class ErtEditor extends Vue {
         color: wowColors[player.class]
       });
       await quill.insertText(range.index + insertString.length, ' ');
-      quill.removeFormat(
-        range.index + insertString.length,
-        range.index + insertString.length + 1
-      );
+      quill.removeFormat(range.index + insertString.length, 1);
       quill.setSelection(range.index + insertString.length + 1, 0);
     } else {
       this.showSelectEditorToast();
